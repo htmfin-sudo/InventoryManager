@@ -45,6 +45,12 @@ $menu = [
         'admin' => false
     ],
     [
+        'name' => 'Rapoarte',
+        'url' => '/InventoryManager/pages/reports.php',
+        'pages' => ['reports.php'],
+        'admin' => true
+    ],
+    [
         'name' => 'Utilizatori',
         'url' => '/InventoryManager/pages/users.php',
         'pages' => ['users.php'],
