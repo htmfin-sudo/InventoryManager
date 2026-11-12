@@ -4,16 +4,11 @@
 require_once __DIR__ . "/auth.php";
 
 /**
- * Controlul accesului in StockFlow.
+ * Control acces StockFlow
  *
- * Administrator:
- * - Acces la toate functiile
- *
- * Angajat:
- * - Dashboard
- * - Vizualizare produse
- * - Miscari de stoc
- * - Schimbarea propriei parole
+ * Administrator: toate paginile
+ * Angajat: Dashboard, Produse,
+ * Miscari de stoc, Schimbare parola, Logout
  */
 
 function sf_guard_request(): void
@@ -36,6 +31,7 @@ function sf_guard_request(): void
 
     $employeePages = [
         '/InventoryManager/index.php',
+        '/InventoryManager/logout.php',
         '/InventoryManager/pages/products.php',
         '/InventoryManager/pages/stock_movements.php',
         '/InventoryManager/pages/change_password.php'
