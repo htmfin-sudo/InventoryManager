@@ -1,0 +1,64 @@
+
+body {
+    background-color: #f4f6fb;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    background-color: #111827;
+    min-height: 100vh;
+    padding: 25px 15px;
+}
+
+.sidebar h3 {
+    color: white;
+    margin-bottom: 35px;
+}
+
+.sidebar a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: #2563eb;
+    color: white;
+}
+
+.main-content {
+    padding: 30px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    height: 100%;
+}
+
+.stat-card h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.stat-card p {
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+    .sidebar {
+        min-height: auto;
+    }
+
+    .main-content {
+        padding: 18px;
+    }
+}
