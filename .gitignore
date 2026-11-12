@@ -1,8 +1,12 @@
 
-# Configurare locala baza de date
+# Configurare baza de date
 config/db.php
 .env
 .env.*
+
+# Scripturi temporare administrative
+scripts/create_admin.php
+scripts/change_password.php
 
 # Fisiere temporare
 *.log

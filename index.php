@@ -1,8 +1,15 @@
 
 <?php
+// AUTENTIFICARE
+require_once __DIR__ . "/includes/auth.php";
+
+// Blocheaza vizitatorii neautentificati
+sf_require_login();
+
+// BAZA DE DATE
 require_once __DIR__ . "/config/db.php";
 
-// Statistici generale
+// STATISTICI GENERALE
 $totalProducts = (int)$pdo
     ->query("SELECT COUNT(*) FROM products")
     ->fetchColumn();
@@ -19,7 +26,7 @@ $totalMovements = (int)$pdo
     ->query("SELECT COUNT(*) FROM stock_movements")
     ->fetchColumn();
 
-// Calculam stocurile reale
+// STOCURI REALE
 $sql = "
     SELECT
         p.id,
@@ -34,30 +41,40 @@ $sql = "
                 END
             ), 0
         ) AS current_stock
+
     FROM products p
+
     LEFT JOIN stock_movements sm
         ON sm.product_id = p.id
-    GROUP BY p.id, p.name, p.min_stock
+
+    GROUP BY
+        p.id,
+        p.name,
+        p.min_stock
+
     ORDER BY p.name
 ";
 
 $products = $pdo->query($sql)
     ->fetchAll(PDO::FETCH_ASSOC);
 
+// CALCUL TOTAL STOC
 $totalStock = 0;
 $lowStockCount = 0;
 
 foreach ($products as $product) {
 
     $stock = (int)$product['current_stock'];
+    $minimum = (int)$product['min_stock'];
 
     $totalStock += $stock;
 
-    if ($stock < (int)$product['min_stock']) {
+    if ($stock < $minimum) {
         $lowStockCount++;
     }
 }
 
+// SECURIZARE AFISARE TEXT
 function e($value) {
     return htmlspecialchars(
         (string)$value,
@@ -104,38 +121,62 @@ function e($value) {
             </h1>
 
             <p class="text-secondary mb-4">
-                Bine ai venit în StockFlow!
+
+                Bine ai venit,
+                <?= e($_SESSION['user_name']) ?>!
+
                 Monitorizează inventarul firmei.
+
             </p>
 
-            <!-- CARDURI STATISTICI -->
+            <!-- STATISTICI GENERALE -->
             <div class="row g-4">
 
                 <div class="col-md-6 col-xl-3">
                     <div class="stat-card">
+
                         <p>Total produse</p>
-                        <h2><?= $totalProducts ?></h2>
+
+                        <h2>
+                            <?= $totalProducts ?>
+                        </h2>
+
                     </div>
                 </div>
 
                 <div class="col-md-6 col-xl-3">
                     <div class="stat-card">
+
                         <p>Categorii</p>
-                        <h2><?= $totalCategories ?></h2>
+
+                        <h2>
+                            <?= $totalCategories ?>
+                        </h2>
+
                     </div>
                 </div>
 
                 <div class="col-md-6 col-xl-3">
                     <div class="stat-card">
+
                         <p>Furnizori</p>
-                        <h2><?= $totalSuppliers ?></h2>
+
+                        <h2>
+                            <?= $totalSuppliers ?>
+                        </h2>
+
                     </div>
                 </div>
 
                 <div class="col-md-6 col-xl-3">
                     <div class="stat-card">
+
                         <p>Mișcări de stoc</p>
-                        <h2><?= $totalMovements ?></h2>
+
+                        <h2>
+                            <?= $totalMovements ?>
+                        </h2>
+
                     </div>
                 </div>
 
@@ -182,7 +223,7 @@ function e($value) {
 
             </div>
 
-            <!-- TABEL STOC -->
+            <!-- TABEL STOCURI -->
             <div class="card border-0 shadow-sm mt-4">
 
                 <div class="card-body p-4">
@@ -211,7 +252,7 @@ function e($value) {
                                 <?php
                                 $stock = (int)$p['current_stock'];
                                 $minimum = (int)$p['min_stock'];
-                                $low = $stock < $minimum;
+                                $lowStock = $stock < $minimum;
                                 ?>
 
                                 <tr>
@@ -229,7 +270,8 @@ function e($value) {
                                     </td>
 
                                     <td>
-                                        <?php if ($low): ?>
+
+                                        <?php if ($lowStock): ?>
 
                                             <span class="badge bg-danger">
                                                 Stoc scăzut
@@ -242,6 +284,7 @@ function e($value) {
                                             </span>
 
                                         <?php endif; ?>
+
                                     </td>
 
                                 </tr>
@@ -262,12 +305,16 @@ function e($value) {
 
                     <?php endif; ?>
 
-                    <a href="pages/stock_movements.php"
-                       class="btn btn-primary mt-2">
+                    <a
+                        href="pages/stock_movements.php"
+                        class="btn btn-primary mt-2">
+
                         Gestionează stocul
+
                     </a>
 
                 </div>
+
             </div>
 
         </main>
