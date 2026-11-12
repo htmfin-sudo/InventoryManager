@@ -1,68 +1,148 @@
-# StockFlow – Opening CSV Reports in Microsoft Excel
 
-StockFlow exports two types of CSV reports:
+# StockFlow – Ghid pentru deschiderea rapoartelor CSV în Excel
 
-- **Products:** product details, prices, stock levels, and inventory values.
-- **Stock movements:** dates, products, movement types, quantities, and operators.
+## 1. Descriere
 
-These reports are **CSV files, not native Excel `.xlsx` workbooks**. A CSV file contains data but does not store Excel formatting, column widths, or colors.
+Aplicația StockFlow permite exportarea rapoartelor
+în format CSV (Comma-Separated Values).
 
-## CSV format used by StockFlow
+Sunt disponibile două tipuri de rapoarte:
 
-| Setting | Value |
-| --- | --- |
-| File type | `.csv` |
-| Character encoding | UTF-8 |
-| Field delimiter | Semicolon (`;`) |
-| Text qualifier | Double quotation mark (`"`) when required |
+- Raportul produselor
+- Raportul mișcărilor de stoc
 
-On some computers, double-clicking a CSV file opens all fields in a single Excel column, or special characters such as `ă`, `â`, `î`, `ș`, and `ț` appear incorrectly. This depends on Excel and Windows regional settings; it does **not** necessarily mean the export is damaged.
+Fișierele CSV pot fi deschise în Microsoft Excel
+pentru analizarea și prelucrarea datelor.
 
-## Recommended method: import the CSV into Excel
+## 2. Formatul fișierelor
 
-1. Open **Microsoft Excel**.
-2. Create a **Blank workbook**.
-3. Open the **Data** tab.
-4. Select **From Text/CSV** (or **Get Data → From File → From Text/CSV**, depending on your Excel version).
-5. Select the CSV report downloaded from StockFlow.
-6. In the import preview, choose:
-   - **File Origin / Encoding:** `65001: Unicode (UTF-8)`
-   - **Delimiter:** `Semicolon` (`;`)
-7. Confirm that product names, quantities, prices, and other fields appear in separate columns, with correct special characters.
-8. Click **Load**.
+Rapoartele CSV generate de StockFlow utilizează:
 
-Repeat these steps for either the products report or the stock-movements report.
+- Codificare: UTF-8
+- Separator între coloane: punct și virgulă (;)
+- Extensie: .csv
 
-## Save a reusable Excel workbook
+În funcție de setările regionale ale calculatorului,
+Excel poate afișa toate informațiile într-o singură
+coloană atunci când fișierul este deschis direct.
 
-After importing the CSV:
+Aceasta este o problemă de interpretare a formatului
+CSV, nu o pierdere a datelor exportate.
 
-1. Select **File → Save As**.
-2. Choose **Excel Workbook (`*.xlsx`)** as the file type.
-3. Save the workbook.
+## 3. Cum deschidem corect un CSV în Excel
 
-The resulting `.xlsx` file can be opened directly in Excel later, without repeating the CSV import.
+### Pasul 1 – Descărcarea raportului
 
-## Troubleshooting
+1. Autentificați-vă în aplicația StockFlow
+   folosind un cont Administrator.
+2. Accesați pagina Rapoarte.
+3. Apăsați butonul de export CSV dorit.
+4. Salvați fișierul pe calculator.
 
-### All data appears in column A
+### Pasul 2 – Importarea în Excel
 
-Excel has not recognized the semicolon separator. Import the file through **Data → From Text/CSV** and explicitly select **Semicolon**.
+1. Deschideți Microsoft Excel.
+2. Creați un registru de lucru gol.
+3. Accesați meniul Date (Data).
+4. Selectați Din text/CSV (From Text/CSV).
+5. Alegeți fișierul CSV descărcat.
+6. În fereastra de import, configurați:
 
-### Romanian characters look incorrect
+   Originea fișierului (File Origin):
+   65001: Unicode (UTF-8)
 
-Use **65001: Unicode (UTF-8)** as the file origin/encoding when importing. Avoid repeatedly opening and saving the incorrectly decoded CSV file, as this can damage the displayed characters.
+   Delimitator (Delimiter):
+   Punct și virgulă (Semicolon ;)
 
-### Excel warns about possible data loss
+7. Verificați previzualizarea datelor.
+8. Apăsați Încărcare (Load).
 
-This warning is normal when saving in CSV format, which cannot retain spreadsheet formatting. If you need formatting, save the imported data as **Excel Workbook (`.xlsx`)**.
+## 4. Rezultatul importului
 
-### Prices or numbers are interpreted incorrectly
+După importare, informațiile sunt afișate
+în coloane separate.
 
-Excel may apply local decimal and thousands separators. Check numeric columns during import. If needed, keep the columns as text first, then convert them using the correct locale settings.
+Exemplu pentru raportul produselor:
 
-## Important distinction
+| ID | Produs | Preț | Stoc |
+|---|---|---|---|
+| 1 | Laptop Lenovo | 3200 | 31 |
+| 2 | Tastatură | 260 | 0 |
+| 3 | Mouse Logitech | 327 | 0 |
 
-**StockFlow downloads CSV reports.** Saving an imported CSV as `.xlsx` is an operation performed in Microsoft Excel. StockFlow does not currently promise automatic `.xlsx` generation.
+Valorile sunt orientative.
 
-Return to the [main StockFlow README](README.md).
+Diacriticele românești trebuie să fie afișate
+corect, inclusiv ă, â, î, ș și ț.
+
+## 5. Salvarea raportului ca fișier Excel
+
+După importarea fișierului CSV:
+
+1. Selectați Fișier (File).
+2. Apăsați Salvare ca (Save As).
+3. Alegeți tipul Excel Workbook (*.xlsx).
+4. Introduceți numele fișierului.
+5. Apăsați Salvare (Save).
+
+Fișierul rezultat este un document Excel
+care poate fi deschis ulterior direct,
+fără repetarea procesului de import.
+
+## 6. Probleme frecvente
+
+### Toate datele sunt într-o singură coloană
+
+Cauză:
+Excel nu a identificat separatorul utilizat.
+
+Soluție:
+Importați fișierul folosind delimitatorul
+punct și virgulă (;).
+
+### Diacriticele apar incorect
+
+Exemplu:
+TastaturÄƒ în loc de Tastatură.
+
+Cauză:
+Excel a interpretat greșit codificarea.
+
+Soluție:
+Selectați 65001: Unicode (UTF-8)
+în fereastra de import.
+
+### Prețurile sunt interpretate greșit
+
+Excel poate interpreta diferit separatorul
+zecimal, în funcție de configurarea regională.
+
+Verificați valorile numerice după import.
+Dacă este necesar, selectați tipul de date
+corespunzător în Power Query.
+
+## 7. Observații
+
+CSV este un format standard pentru transferul
+datelor între aplicații.
+
+Fișierele CSV nu includ formatare vizuală,
+culori, filtre sau lățimi prestabilite
+ale coloanelor.
+
+StockFlow generează rapoarte CSV.
+Aplicația nu generează direct fișiere XLSX.
+
+Pentru salvarea în format Excel, utilizați
+procedura descrisă la secțiunea 5.
+
+## 8. Proiect
+
+Aplicație: StockFlow – InventoryManager
+
+Autor: Fineas Hotima
+
+Universitate: Universitatea Politehnica Timișoara
+
+Repository:
+https://github.com/htmfin-sudo/InventoryManager
